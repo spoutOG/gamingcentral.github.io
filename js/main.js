@@ -45,4 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    // Background animation toggle
+    if (localStorage.getItem('animatedBg') === 'off') {
+        document.body.classList.add('no-animated-bg');
+    }
 });
