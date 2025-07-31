@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Games Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .copyright {
+            width: 100%;
+            text-align: center;
+            color: #b8c1ec;
+            font-size: 0.95em;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            background: transparent;
+            z-index: 999;
+            pointer-events: none;
+            user-select: none;
+        }
+        body.light-mode .copyright {
+            color: #232946;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Online Games Showcase</h1>
+        <nav class="dropdown-nav">
+            <button class="nav-toggle" aria-label="Open navigation">
+                ☰ Menu
+            </button>
+            <ul class="nav-menu">
+                <a href="index.html">Home</a>
+                <!-- Add more links here if needed -->
+            </ul>
+        </nav>
+    </header>
+    <button id="theme-toggle" class="theme-toggle-btn">Switch to Light Mode</button>
+    <main>
+        <section>
+            <h2>About This Website</h2>
+            <p>
+                This website is a showcase of various online games. Browse the featured games, read their descriptions, and click "Play Now" to start playing. Enjoy exploring and discovering new games to play!
+                <b>Version</b> Pre-Release 1.0, Light mode is in development, so there may be some bugs. Also, the website is not fully responsive yet, so it may not look good on mobile devices, and some of the animations may be laggy.
+            </p>
+        </section>
+    </main>
+    <div class="copyright">
+        &copy; 2025 Online Games Showcase. All rights reserved.
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

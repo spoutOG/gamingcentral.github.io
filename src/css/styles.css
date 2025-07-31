@@ -1,0 +1,499 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    /* Darker blue gradient background */
+    background: linear-gradient(135deg, #181f3a 0%, #101426 100%);
+    color: #eebbc3;
+    transition: background-color 0.6s cubic-bezier(0.4,0,0.2,1), color 0.6s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    z-index: 1;
+}
+body::before {
+    content: "";
+    position: fixed;
+    z-index: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    background: inherit;
+    filter: blur(24px) brightness(0.9) saturate(1.2);
+    opacity: 0.7;
+    transition: filter 1.2s cubic-bezier(.4,0,.2,1), opacity 0.8s cubic-bezier(.4,0,.2,1);
+}
+body > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Light mode override for background */
+body.light-mode {
+    background: linear-gradient(135deg, #f6f8ff 0%, #b8c1ec 100%) !important;
+}
+body.light-mode::before {
+    background: inherit;
+    filter: blur(12px) brightness(1.08);
+    opacity: 0.5;
+}
+
+/* Force text color for all elements in light mode */
+body.light-mode,
+body.light-mode * {
+    color: #232946 !important;
+    text-shadow: none !important;
+}
+
+/* --- Elegant Header --- */
+header {
+    background: rgba(26, 31, 60, 0.92);
+    color: #eebbc3;
+    padding: 32px 0 18px 0;
+    text-align: center;
+    border-bottom: 2px solid #b8c1ec33;
+    box-shadow: 0 4px 24px 0 rgba(35,41,70,0.10);
+    animation: fadeInDown 1s;
+    backdrop-filter: blur(8px);
+    border-radius: 0 0 24px 24px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.6rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    animation: fadeIn 1.2s;
+    color: #b8c1ec;
+    text-shadow: 0 2px 12px #23294644;
+}
+h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #eebbc3;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+}
+h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #b8c1ec;
+    margin-bottom: 8px;
+}
+
+/* --- Elegant Navigation Dropdown --- */
+.dropdown-nav {
+    position: fixed;
+    top: 40px;
+    left: 0;
+    z-index: 2000 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.nav-toggle {
+    background: #b8c1ec;
+    color: #232946;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.1em;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    transition: background 0.2s, color 0.2s, box-shadow 0.3s, transform 0.2s;
+    outline: none;
+    position: relative;
+    z-index: 101;
+    margin-left: 18px;
+    margin-bottom: 8px;
+}
+.nav-toggle:hover,
+.nav-toggle:focus {
+    background: #eebbc3;
+    color: #232946;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    transform: scale(1.05);
+}
+.nav-menu {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    min-width: 220px;
+    border-radius: 0 18px 18px 0;
+    box-shadow: 8px 0 32px rgba(35,41,70,0.18);
+    background: #232946cc;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-30px) scale(0.98);
+    transition:
+        opacity 0.45s cubic-bezier(.4,0,.2,1),
+        transform 0.45s cubic-bezier(.4,0,.2,1),
+        box-shadow 0.45s cubic-bezier(.4,0,.2,1),
+        background 0.35s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
+    z-index: 2001;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+.dropdown-nav.open .nav-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0) scale(1);
+}
+.nav-menu li {
+    border-bottom: 1px solid #b8c1ec22;
+    animation: navItemFadeIn 0.5s both;
+}
+.nav-menu li:last-child {
+    border-bottom: none;
+}
+@keyframes navItemFadeIn {
+    from { opacity: 0; transform: translateY(10px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+.nav-menu a {
+    display: block;
+    padding: 18px 32px 18px 28px;
+    color: #eebbc3;
+    text-decoration: none;
+    font-size: 1.08em;
+    transition: background 0.2s, color 0.2s, padding-left 0.2s;
+    border-radius: 0 12px 12px 0;
+}
+.nav-menu a:hover {
+    background: #b8c1ec;
+    color: #232946;
+    padding-left: 40px;
+}
+
+/* --- Elegant Main Content --- */
+main {
+    max-width: 900px;
+    margin: 36px auto 0 auto;
+    padding: 32px 18px 48px 18px;
+    border-radius: 24px;
+    background: rgba(35, 41, 70, 0.60);
+    box-shadow: 0 8px 48px 0 rgba(35,41,70,0.10);
+    backdrop-filter: blur(6px);
+    animation: fadeIn 1.2s;
+}
+section {
+    margin-bottom: 32px;
+}
+.game-list {
+    background: transparent;
+    animation: fadeIn 1.5s;
+}
+.game-item {
+    background: rgba(26, 31, 60, 0.92);
+    border: 1.5px solid #b8c1ec;
+    border-radius: 16px;
+    padding: 22px 28px;
+    margin: 24px 0;
+    box-shadow: 0 4px 24px rgba(35, 41, 70, 0.13);
+    opacity: 0;
+    transform: translateY(40px);
+    animation: gameItemFadeIn 0.8s forwards;
+    transition:
+        box-shadow 0.5s cubic-bezier(.4,0,.2,1),
+        transform 0.5s cubic-bezier(.4,0,.2,1),
+        border-color 0.35s cubic-bezier(.4,0,.2,1),
+        background 0.4s cubic-bezier(.4,0,.2,1),
+        filter 0.5s cubic-bezier(.4,0,.2,1);
+    will-change: transform, box-shadow, border-color, background, filter;
+    z-index: 1;
+    position: relative;
+}
+.game-item:hover {
+    box-shadow: 0 24px 64px 0 rgba(62,111,244,0.28), 0 4px 0 0 #b8c1ec;
+    transform: translateY(-12px) scale(1.04) rotateY(10deg) skewY(2deg);
+    border-color: #3e6ff4;
+    background: linear-gradient(120deg, #2d1e4a 70%, #3e6ff4 100%);
+    filter: brightness(1.12) saturate(1.12);
+    z-index: 3;
+}
+@keyframes gameItemFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.03);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* --- Elegant Buttons --- */
+.play-btn {
+    background-color: #3e6ff4;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 1.08rem;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.18), 0 2px 0 0 #000;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    margin-top: 16px;
+    margin-left: 24px;
+    opacity: 0;
+    transform: scale(0.95);
+    animation: btnFadeIn 1s forwards;
+    animation-delay: 1s;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+@keyframes btnFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.play-btn:hover {
+    background-color: #2f5bbf;
+    transform: scale(1.13);
+    box-shadow: 0 8px 24px 0 rgba(0,0,0,0.30), 0 2px 0 0 #000;
+}
+
+/* --- Elegant Footer --- */
+footer {
+    text-align: center;
+    padding: 24px 0 16px 0;
+    background: rgba(26, 31, 60, 0.92);
+    color: #eebbc3;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    animation: fadeInUp 1.2s;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -4px 24px 0 rgba(35,41,70,0.10);
+    backdrop-filter: blur(8px);
+}
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* --- Elegant Theme Toggle Button --- */
+.theme-toggle-btn {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    background: #b8c1ec;
+    color: #232946;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 28px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.08em;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.theme-toggle-btn:hover {
+    background: #eebbc3;
+    color: #232946;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    transform: scale(1.06);
+}
+
+/* --- Light Mode Adjustments --- */
+body.light-mode,
+body.light-mode .game-list,
+body.light-mode .game-item,
+body.light-mode header,
+body.light-mode footer {
+    background-color: #f6f8ff !important;
+    color: #232946 !important;
+}
+body.light-mode header,
+body.light-mode footer {
+    background: #b8c1ec !important;
+    color: #232946 !important;
+    box-shadow: 0 4px 24px 0 rgba(184,193,236,0.10);
+}
+body.light-mode main {
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 8px 48px 0 rgba(184,193,236,0.10);
+    backdrop-filter: blur(6px);
+}
+body.light-mode .game-item {
+    background: #fff !important;
+    border-color: #b8c1ec !important;
+    box-shadow: 0 2px 8px rgba(184, 193, 236, 0.15) !important;
+}
+body.light-mode .game-item h3 {
+    color: #3e6ff4 !important;
+}
+body.light-mode .play-btn {
+    background-color: #232946 !important;
+    color: #fff !important;
+}
+body.light-mode .play-btn:hover {
+    background-color: #3e6ff4 !important;
+    color: #fff !important;
+}
+body.light-mode .dropdown-nav .nav-toggle {
+    background: #232946;
+    color: #eebbc3;
+}
+body.light-mode .dropdown-nav .nav-toggle:hover,
+body.light-mode .dropdown-nav .nav-toggle:focus {
+    background: #3e6ff4;
+    color: #fff;
+}
+body.light-mode .nav-menu {
+    background: #ffffffcc;
+    box-shadow: 8px 0 32px rgba(184,193,236,0.18);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+body.light-mode .nav-menu a {
+    color: #232946 !important;
+}
+body.light-mode .nav-menu a:hover {
+    background: #b8c1ec;
+    color: #232946 !important;
+}
+
+/* --- Smoother and More Inviting Animations --- */
+
+/* Buttons and toggles */
+button,
+.play-btn,
+.theme-toggle-btn,
+.nav-toggle {
+    transition:
+        background 0.25s cubic-bezier(.4,0,.2,1),
+        color 0.25s cubic-bezier(.4,0,.2,1),
+        box-shadow 0.32s cubic-bezier(.4,0,.2,1),
+        transform 0.22s cubic-bezier(.4,0,.2,1);
+    will-change: transform, box-shadow, background, color;
+}
+
+button:hover,
+.play-btn:hover,
+.theme-toggle-btn:hover,
+.nav-toggle:hover {
+    transform: scale(1.13) rotate(-1deg);
+    box-shadow: 0 8px 32px 0 rgba(62,111,244,0.18), 0 2px 0 0 #000;
+}
+
+/* Dropdown menu */
+.nav-menu {
+    transition:
+        opacity 0.45s cubic-bezier(.4,0,.2,1),
+        transform 0.45s cubic-bezier(.4,0,.2,1),
+        box-shadow 0.45s cubic-bezier(.4,0,.2,1),
+        background 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+.dropdown-nav.open .nav-menu {
+    animation: navMenuPop 0.45s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes navMenuPop {
+    0% {
+        opacity: 0;
+        transform: translateY(-16px) scale(0.96);
+        box-shadow: 0 2px 8px rgba(35,41,70,0.08);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(4px) scale(1.04);
+        box-shadow: 0 12px 32px rgba(35,41,70,0.18);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        box-shadow: 0 8px 32px rgba(35,41,70,0.18);
+    }
+}
+
+/* Header fade-in */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.98);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(6px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Footer fade-in */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Main fade-in */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Ensure dropdown menu is always above cards */
+.dropdown-nav,
+.nav-menu,
+.dropdown-nav.open .nav-menu {
+    z-index: 2000 !important;
+}
+
+/* Prevent cards from overlapping the menu */
+.game-item {
+    z-index: 1;
+    position: relative;
+}
