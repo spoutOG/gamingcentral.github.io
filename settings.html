@@ -5,7 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings - Online Games Showcase</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="icon.png">
     <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+
         .settings-container {
             max-width: 500px;
             margin: 80px auto 0 auto;
@@ -30,11 +40,43 @@
             font-size: 1.1rem;
             color: #eebbc3;
         }
+        /* Make the animated background toggle a circular button */
         .setting-row input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             accent-color: #3e6ff4;
+            border-radius: 50%;
+            appearance: none;
+            -webkit-appearance: none;
+            outline: none;
+            border: 2px solid #3e6ff4;
+            background: #232946;
+            cursor: pointer;
+            display: inline-block;
+            transition: box-shadow 0.2s, border-color 0.2s;
+            position: relative;
         }
+        .setting-row input[type="checkbox"]:checked {
+            background: #3e6ff4;
+            border-color: #b8c1ec;
+        }
+        .setting-row input[type="checkbox"]::after {
+            content: '';
+            display: block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #eebbc3;
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .setting-row input[type="checkbox"]:checked::after {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
