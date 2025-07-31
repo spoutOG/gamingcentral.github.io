@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - Online Games Showcase</title>
+    <title>Settings</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,7 +66,7 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: #eebbc3;
+            background: #2a4ec2;
             position: absolute;
             top: 6px;
             left: 6px;
@@ -99,8 +99,17 @@
                 <label for="toggle-animated-bg">Animated Background</label>
                 <input type="checkbox" id="toggle-animated-bg" checked>
             </div>
+            <div class="setting-row">
+                <label for="toggle-blur">Enable Blur Effects</label>
+                <input type="checkbox" id="toggle-blur" checked>
+            </div>
+            <div class="setting-row">
+                <label for="toggle-animations">Enable Animations</label>
+                <input type="checkbox" id="toggle-animations" checked>
+            </div>
         </div>
     </main>
+    <canvas id="animated-dots-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
     <script>
     // Settings: Animated BG toggle
     const bgToggle = document.getElementById('toggle-animated-bg');
@@ -108,6 +117,11 @@
         const enabled = localStorage.getItem('animatedBg') !== 'off';
         document.body.classList.toggle('no-animated-bg', !enabled);
         if(bgToggle) bgToggle.checked = enabled;
+        // Hide or show the canvas for instant feedback
+        const dotsCanvas = document.getElementById('animated-dots-bg');
+        if (dotsCanvas) {
+            dotsCanvas.style.display = enabled ? 'block' : 'none';
+        }
     }
     if(bgToggle) {
         bgToggle.addEventListener('change', function() {
@@ -120,6 +134,44 @@
         });
     }
     applyAnimatedBgSetting();
+
+    // Blur toggle
+    const blurToggle = document.getElementById('toggle-blur');
+    function applyBlurSetting() {
+        const enabled = localStorage.getItem('blurEffects') !== 'off';
+        document.body.classList.toggle('no-blur', !enabled);
+        if(blurToggle) blurToggle.checked = enabled;
+    }
+    if(blurToggle) {
+        blurToggle.addEventListener('change', function() {
+            if(this.checked) {
+                localStorage.setItem('blurEffects', 'on');
+            } else {
+                localStorage.setItem('blurEffects', 'off');
+            }
+            applyBlurSetting();
+        });
+    }
+    applyBlurSetting();
+
+    // Animations toggle
+    const animToggle = document.getElementById('toggle-animations');
+    function applyAnimSetting() {
+        const enabled = localStorage.getItem('animations') !== 'off';
+        document.body.classList.toggle('no-animations', !enabled);
+        if(animToggle) animToggle.checked = enabled;
+    }
+    if(animToggle) {
+        animToggle.addEventListener('change', function() {
+            if(this.checked) {
+                localStorage.setItem('animations', 'on');
+            } else {
+                localStorage.setItem('animations', 'off');
+            }
+            applyAnimSetting();
+        });
+    }
+    applyAnimSetting();
     </script>
     <script src="js/main.js"></script>
 </body>
