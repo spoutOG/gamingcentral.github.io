@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Games Showcase v2</title>
+    <title>Gaming Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -26,51 +26,53 @@
             <ul class="nav-menu">
                 <li><a href="Info.html">Info</a></li>
                 <li><a href="settings.html">Settings</a></li>
+                <li><a href="https://sites.google.com/view/palace-stable/sea">Google Sites</a></li>
             </ul>
         </nav>
     </header>
     <button id="theme-toggle" class="theme-toggle-btn">Switch to Light Mode</button>
     <main>
-        <section>
-            <h2>Featured Games</h2>
-            <div style="margin-bottom: 32px;">
-                <p>
-                    Welcome to the Online Games Showcase! Explore a curated collection of games below. Click <b>Play Now</b> buttons to start playing instantly. We are also working on adding a sorted game page feature in the future. Stay tuned for updates!
-                    If you have bad preformance, disable the animated BG here. --> <a href="settings.html" class="settings-link-btn"><button class="play-btn" style="margin-left:0;margin-top:12px;">Go to Settings</button></a>
-                </p>
-            </div>
-            <div class="game-list">
+    <section>
+        <h2>Featured Games</h2>
+        <div style="margin-bottom: 32px;">
+            <p>
+                Welcome to the Unbl0ck3d G4ming Hub! (Still working on the dropdown anims, full dropdowns coming soon) Explore my collection of games below. Click <b>Play Now</b> buttons to start playing instantly. We are also working on adding a sorted game page feature in the future. Stay tuned for updates!
+                If you have bad preformance, disable the animated BG here. --> <a href="settings.html" class="settings-link-btn"><button class="play-btn" style="margin-left:0;margin-top:12px;">Go to Settings</button></a>
+            </p>
+        </div>
+        <div class="game-list">
+
+            <!-- EaglerCrafts Dropdown -->
+                <summary><b>EaglerCrafts</b></summary>
                 <article class="game-item">
-                    <h3>EaglerCraft 1.12.2 <b>LATEST, WASM</b></h3>
-                    <p>WASM enhances performance. Enjoy Minecraft on Chromebooks with better speed!</p>
+                    <h3>EaglerCraft 1.12.2 <b>Latest, WASM</b></h3>
+                    <p>WASM enhances performance. Enjoy Minecraft on Chromebooks (and other devices) with better speed!</p>
                     <a href="./EaglerCrafts/1.12 WASM.html">
                         <button class="play-btn">Play Now</button>
                     </a>
                 </article>
                 <article class="game-item">
-                    <h3>EaglerCraft 1.12.2 <b>LATEST, JS</b></h3>
+                    <h3>EaglerCraft 1.12.2 <b>Latest, JavaScript</b></h3>
                     <p>JS is slower, but works on more devices. Try it if WASM doesn't work for you.</p>
                     <a href="./EaglerCrafts/1.12 JS.html">
                         <button class="play-btn">Play Now</button>
                     </a>
                 </article>
-                <!-- Example of a more visually distinct game card -->
                 <article class="game-item">
-                    <h3>EaglerCraft 1.8 <b>WASM</b></h3>
+                    <h3>EaglerCraft 1.8 <b>WASM, Shaders</b></h3>
                     <p>Older, but easier to render</p>
                     <a href="./EaglerCrafts/1.8 WASM.html">
                         <button class="play-btn">Play Now</button>
                     </a>
                 </article>
-                <!-- Continue with the rest of the games -->
                 <article class="game-item">
-                    <h3>EaglerCraft 1.8 <b>JS</b></h3>
+                    <h3>EaglerCraft 1.8 <b>JavaScript, Shaders</b></h3>
                     <p>Supported on (mostly) all devices.</p>
                     <a href="./EaglerCrafts/1.8 JS.html">
                         <button class="play-btn">Play Now</button>
                     </a>
                 </article>
-                  <h2>Older Eaglercrafts</h2>
+                <h4>Older Eaglercrafts <b>(All of these are JS)</b></h4>
                 <article class="game-item">
                     <h3>Beta 1.7.3</h3>
                     <p>-Coming soon-</p>
@@ -92,7 +94,10 @@
                         <button class="play-btn">Play Now</button>
                     </a>
                 </article>
-            <h2>H4cked Cl1nts</h2>
+            </details>
+
+            <!-- Hacked Clients Dropdown -->
+                <summary><b>H4cked Cl1nts <b>WASM and JS may vary for these files</b></summary>
                 <article class="game-item">
                     <h3>DragonX v2</h3>
                     <p>Client 1</p>
@@ -135,12 +140,19 @@
                         <button class="play-btn">Play Now</button>
                     </a>
                 </article>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 Online Games Showcase. All rights reserved.</p>
-    </footer>
+            <h3>Assorted Games</h3>
+                <article class="game-item">
+                    <h3>OvO (testing)</h3>
+                    <p>--</p>
+                    <a href="./1.4.4b/index.html">
+                        <button class="play-btn">Play Now</button>
+                    </a>
+            </details>
+
+            <!-- Add more dropdowns for other game categories as needed -->
+        </div>
+    </section>
+</main>
     <script src="js/main.js"></script>
 </body>
 </html>

@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Animated color-changing dots wallpaper (performance optimized)
+// Animated color-changing glowing orbs wallpaper (major revamp)
 (function(){
     const canvas = document.getElementById('animated-dots-bg');
     let running = true;
@@ -76,7 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const ctx = canvas.getContext('2d');
     let w = window.innerWidth, h = window.innerHeight;
     let dots = [];
-    const DOTS = Math.floor((w * h) / 5000); // Lower density for performance
+    const DOTS = Math.floor((w * h) / 3500); // More orbs for a denser effect
+
     function resize() {
         w = window.innerWidth;
         h = window.innerHeight;
@@ -90,17 +91,21 @@ document.addEventListener('DOMContentLoaded', function () {
     resize();
 
     function randomColor(t, offset) {
-        const hue = 220 + 50 * Math.abs(Math.sin(t/1800 + offset));
-        return `hsl(${hue}, 80%, 65%)`;
+        const hue = 220 + 80 * Math.abs(Math.sin(t/1200 + offset));
+        return `hsl(${hue}, 90%, 65%)`;
     }
     function makeDots() {
         dots = [];
         for(let i=0;i<DOTS;i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 0.3 + Math.random() * 0.5;
             dots.push({
                 x: Math.random()*w,
                 y: Math.random()*h,
-                r: 10 + Math.random()*12, // smaller dots
-                speed: 0.1 + Math.random()*0.2,
+                r: 18 + Math.random()*22,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                baseSpeed: speed,
                 phase: Math.random()*Math.PI*2,
                 offset: Math.random()*2
             });
@@ -116,15 +121,37 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         ctx.clearRect(0,0,w,h);
         for(const d of dots) {
-            const y = d.y + Math.sin(t/900 * d.speed + d.phase) * 10;
+            // Move dot
+            d.x += d.vx;
+            d.y += d.vy;
+
+            // Bounce off edges
+            if (d.x < 0 || d.x > w) d.vx *= -1;
+            if (d.y < 0 || d.y > h) d.vy *= -1;
+
+            // Gentle floating effect
+            const floatY = Math.sin(t/700 * d.baseSpeed + d.phase) * 18;
+            // Glow effect
+            ctx.save();
             ctx.beginPath();
-            ctx.arc(d.x, y, d.r, 0, Math.PI*2);
+            ctx.arc(d.x, d.y + floatY, d.r, 0, Math.PI*2);
+            ctx.shadowColor = randomColor(t, d.offset);
+            ctx.shadowBlur = 48 + Math.sin(t/900 + d.offset)*24;
+            ctx.globalAlpha = 0.18 + 0.12*Math.sin(t/1200 + d.offset);
             ctx.fillStyle = randomColor(t, d.offset);
-            ctx.globalAlpha = 0.12 + 0.08*Math.sin(t/1200 + d.offset);
-            ctx.shadowColor = ctx.fillStyle;
-            ctx.shadowBlur = 16;
             ctx.fill();
-            ctx.shadowBlur = 0;
+            ctx.restore();
+
+            // Inner orb for extra glow
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(d.x, d.y + floatY, d.r*0.6, 0, Math.PI*2);
+            ctx.globalAlpha = 0.32 + 0.18*Math.sin(t/1200 + d.offset);
+            ctx.fillStyle = randomColor(t+400, d.offset+1.5);
+            ctx.shadowColor = ctx.fillStyle;
+            ctx.shadowBlur = 24;
+            ctx.fill();
+            ctx.restore();
         }
         ctx.globalAlpha = 1;
         if (running) requestAnimationFrame(animate);

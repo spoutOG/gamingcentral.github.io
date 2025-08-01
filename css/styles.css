@@ -196,12 +196,12 @@ section {
     -webkit-backdrop-filter: blur(18px) saturate(1.2);
     opacity: 0;
     transform: translateX(-60px) scale(0.96) rotate(-2deg);
-    animation: cardSlideFadeIn 0.5s cubic-bezier(.6,-0.28,.74,.05) forwards;
+    animation: cardSlideFadeIn 0.85s cubic-bezier(.33,1,.68,1) forwards;
     transition:
         box-shadow 0.22s cubic-bezier(.4,0,.2,1),
         transform 0.22s cubic-bezier(.4,0,.2,1),
         border-color 0.18s cubic-bezier(.4,0,.2,1),
-        background 0.18s cubic-bezier(.4,0,.2,1),
+        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- make background fade smoother */
         filter 0.18s cubic-bezier(.4,0,.2,1);
     z-index: 1;
     position: relative;
@@ -211,24 +211,15 @@ section {
     transform: scale(1.07) rotate(2deg) translateY(-8px);
     border-color: #eebbc3;
     background: linear-gradient(100deg, #232946 60%, #3e6ff4 100%);
-    filter: brightness(1.18) saturate(1.18); /* <-- blur removed */
+    filter: brightness(1.18) saturate(1.18);
     z-index: 3;
+    transition:
+        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
+        transform 0.22s cubic-bezier(.4,0,.2,1),
+        border-color 0.18s cubic-bezier(.4,0,.2,1),
+        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- match fade duration */
+        filter 0.18s cubic-bezier(.4,0,.2,1);
 }
-@keyframes gameItemFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(40px) scale(0.96);
-    }
-    60% {
-        opacity: 1;
-        transform: translateY(-6px) scale(1.03);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
 /* --- Elegant Buttons --- */
 .play-btn {
     background-color: #3e6ff4;
@@ -265,7 +256,7 @@ section {
     }
 }
 .play-btn:hover {
-    background: linear-gradient(90deg, #3e6ff4 60%, #eebbc3 100%);
+    background: linear-gradient(90deg, #3e6ff4 60%, #221fd6 100%);
     color: #232946;
     transform: scale(1.12);
     /* Remove animation property to prevent flicker/disappear */
@@ -321,7 +312,7 @@ footer {
     transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 .theme-toggle-btn:hover {
-    background: #eebbc3;
+    background: #5b72d6;
     color: #232946;
     box-shadow: 0 4px 24px rgba(0,0,0,0.18);
     transform: scale(1.06);
@@ -348,20 +339,31 @@ body.light-mode main {
     backdrop-filter: blur(6px);
 }
 body.light-mode .game-item {
-    background: #fff !important;
+    background: rgba(255,255,255,0.85) !important;
     border-color: #b8c1ec !important;
-    box-shadow: 0 2px 8px rgba(184, 193, 236, 0.15) !important;
+    box-shadow: 0 2px 12px rgba(184, 193, 236, 0.15) !important;
+    color: #232946 !important;
+    filter: none !important;
 }
-body.light-mode .game-item h3 {
-    color: #3e6ff4 !important;
+body.light-mode .game-item h3,
+body.light-mode .game-item p {
+    color: #232946 !important;
+    text-shadow: none !important;
+}
+body.light-mode .game-item:hover {
+    background: linear-gradient(90deg, #eaf0ff 60%, #b8c1ec 100%) !important;
+    border-color: #3e6ff4 !important;
+    box-shadow: 0 0 0 6px #b8c1ec88, 0 16px 48px 0 #b8c1ec33 !important;
+    filter: brightness(1.04) saturate(1.08) !important;
 }
 body.light-mode .play-btn {
-    background-color: #232946 !important;
+    background: #3e6ff4 !important;
     color: #fff !important;
+    box-shadow: 0 2px 12px rgba(62,111,244,0.12) !important;
 }
 body.light-mode .play-btn:hover {
-    background-color: #3e6ff4 !important;
-    color: #fff !important;
+    background: linear-gradient(90deg, #b8c1ec 60%, #3e6ff4 100%) !important;
+    color: #232946 !important;
 }
 body.light-mode .dropdown-nav .nav-toggle {
     background: #232946;
@@ -384,6 +386,22 @@ body.light-mode .nav-menu a {
 body.light-mode .nav-menu a:hover {
     background: #b8c1ec;
     color: #232946 !important;
+}
+body.light-mode .game-dropdown {
+    background: rgba(255,255,255,0.65) !important;
+    box-shadow: 0 4px 24px 0 rgba(184,193,236,0.10) !important;
+}
+body.light-mode .game-dropdown > summary {
+    background: #b8c1ec !important;
+    color: #232946 !important;
+    box-shadow: 0 2px 12px #b8c1ec44 !important;
+}
+body.light-mode .game-dropdown[open] > summary {
+    background: #eaf0ff !important;
+    color: #232946 !important;
+}
+body.light-mode .game-dropdown > *:not(summary) {
+    background: transparent !important;
 }
 
 /* --- Smoother and More Inviting Animations --- */
@@ -494,26 +512,30 @@ button:hover,
 @keyframes cardSlideFadeIn {
     0% {
         opacity: 0;
-        transform: translateX(-60px) scale(0.96) rotate(-2deg);
+        transform: translateY(40px) scale(0.96) rotate(-2deg);
+        filter: blur(8px);
     }
-    70% {
+    60% {
         opacity: 1;
-        transform: translateX(8px) scale(1.03) rotate(1deg);
+        transform: translateY(-4px) scale(1.03) rotate(1deg);
+        filter: blur(2px);
     }
     100% {
         opacity: 1;
-        transform: translateX(0) scale(1) rotate(0deg);
+        transform: translateY(0) scale(1) rotate(0deg);
+        filter: blur(0);
     }
 }
 .game-item {
-    animation: cardSlideFadeIn 0.5s cubic-bezier(.6,-0.28,.74,.05) forwards;
+    animation: cardSlideFadeIn 0.85s cubic-bezier(.33,1,.68,1) forwards;
     opacity: 0;
-    transform: translateX(-60px) scale(0.96) rotate(-2deg);
+    transform: translateY(40px) scale(0.96) rotate(-2deg);
+    filter: blur(8px);
     transition:
         box-shadow 0.22s cubic-bezier(.4,0,.2,1),
         transform 0.22s cubic-bezier(.4,0,.2,1),
         border-color 0.18s cubic-bezier(.4,0,.2,1),
-        background 0.18s cubic-bezier(.4,0,.2,1),
+        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- make background fade smoother */
         filter 0.18s cubic-bezier(.4,0,.2,1);
 }
 .game-item:hover {
@@ -521,8 +543,14 @@ button:hover,
     transform: scale(1.07) rotate(2deg) translateY(-8px);
     border-color: #eebbc3;
     background: linear-gradient(100deg, #232946 60%, #3e6ff4 100%);
-    filter: brightness(1.18) saturate(1.18); /* <-- blur removed */
+    filter: brightness(1.18) saturate(1.18);
     z-index: 3;
+    transition:
+        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
+        transform 0.22s cubic-bezier(.4,0,.2,1),
+        border-color 0.18s cubic-bezier(.4,0,.2,1),
+        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- match fade duration */
+        filter 0.18s cubic-bezier(.4,0,.2,1);
 }
 
 /* Play button: pulse and color sweep on hover */
@@ -630,15 +658,27 @@ main {
     -webkit-backdrop-filter: blur(18px) saturate(1.2);
     opacity: 0;
     transform: translateX(-60px) scale(0.96) rotate(-2deg);
-    animation: cardSlideFadeIn 0.5s cubic-bezier(.6,-0.28,.74,.05) forwards;
+    animation: cardSlideFadeIn 0.85s cubic-bezier(.33,1,.68,1) forwards;
     transition:
         box-shadow 0.22s cubic-bezier(.4,0,.2,1),
         transform 0.22s cubic-bezier(.4,0,.2,1),
         border-color 0.18s cubic-bezier(.4,0,.2,1),
-        background 0.18s cubic-bezier(.4,0,.2,1),
+        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- make background fade smoother */
         filter 0.18s cubic-bezier(.4,0,.2,1);
-    z-index: 1;
-    position: relative;
+}
+.game-item:hover {
+    box-shadow: 0 0 0 6px #eebbc3aa, 0 16px 48px 0 rgba(62,111,244,0.22);
+    transform: scale(1.07) rotate(2deg) translateY(-8px);
+    border-color: #eebbc3;
+    background: linear-gradient(100deg, #232946 60%, #3e6ff4 100%);
+    filter: brightness(1.18) saturate(1.18);
+    z-index: 3;
+    transition:
+        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
+        transform 0.22s cubic-bezier(.4,0,.2,1),
+        border-color 0.18s cubic-bezier(.4,0,.2,1),
+        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- match fade duration */
+        filter 0.18s cubic-bezier(.4,0,.2,1);
 }
 
 /* Header blur */
@@ -778,4 +818,76 @@ main, .game-item, header, footer, .nav-menu {
     box-shadow: 0 2px 8px 0 rgba(35,41,70,0.08);
     backdrop-filter: blur(8px) saturate(1.1);
     -webkit-backdrop-filter: blur(8px) saturate(1.1);
+}
+
+/* --- Smoother Slide In/Out Animation for Game Dropdown --- */
+.game-dropdown {
+    display: block;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: none;
+    border: none;
+    transition: box-shadow 0.3s cubic-bezier(.4,0,.2,1), background 0.4s cubic-bezier(.4,0,.2,1);
+    will-change: box-shadow, background;
+}
+
+.game-dropdown[open] {
+    box-shadow: 0 4px 24px 0 rgba(62,111,244,0.13);
+    background: rgba(35, 41, 70, 0.18);
+    padding: 10px 15px;
+    /* Remove animation property here to allow CSS transitions to work on open/close */
+}
+
+.game-dropdown > summary {
+    cursor: pointer;
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: #eebbc3;
+    padding: 20px 30px;
+    background: rgba(35, 41, 70, 0.22);
+    border-radius: 12px;
+    outline: none;
+    transition: background 0.35s cubic-bezier(.4,0,.2,1), color 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s cubic-bezier(.4,0,.2,1), transform 0.25s cubic-bezier(.4,0,.2,1);
+    will-change: background, color, box-shadow, transform;
+}
+.game-dropdown > summary:hover,
+.game-dropdown > summary:focus {
+    background: #3e6ff4;
+    color: #fff;
+}
+.game-dropdown[open] > summary {
+    background: #b8c1ec;
+    color: #232946;
+    transition: background 0.35s, color 0.35s;
+}
+
+/* --- Slide In/Out Animation for <details> content --- */
+.game-dropdown > *:not(summary) {
+    display: block;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: translateY(-32px);
+    transition:
+        opacity 0.5s cubic-bezier(.4,0,.2,1),
+        max-height 0.7s cubic-bezier(.4,0,.2,1),
+        transform 0.6s cubic-bezier(.4,0,.2,1);
+    will-change: opacity, max-height, transform;
+    pointer-events: none;
+}
+.game-dropdown[open] > *:not(summary) {
+    opacity: 1;
+    max-height: 2000px;
+    transform: translateY(0);
+    transition:
+        opacity 0.7s cubic-bezier(.4,0,.2,1),
+        max-height 0.8s cubic-bezier(.4,0,.2,1),
+        transform 0.7s cubic-bezier(.4,0,.2,1);
+    pointer-events: auto;
+}
+
+/* Optional: Prevent summary from being focusable when closed for accessibility */
+.game-dropdown:not([open]) > *:not(summary) {
+    pointer-events: none;
 }
