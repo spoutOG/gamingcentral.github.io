@@ -234,8 +234,7 @@ section {
     transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
     margin-top: 16px;
     margin-left: 24px;
-    opacity: 0;
-    transform: scale(0.95);
+    opacity: 1; /* Always visible after fade-in */
     animation: btnFadeIn 1s forwards;
     animation-delay: 1s;
     font-weight: 600;
@@ -256,11 +255,12 @@ section {
     }
 }
 .play-btn:hover {
-    background: linear-gradient(90deg, #3e6ff4 60%, #221fd6 100%);
+    background: linear-gradient(90deg, #3e6ff4 60%, #eebbc3 100%);
     color: #232946;
     transform: scale(1.12);
     /* Remove animation property to prevent flicker/disappear */
     box-shadow: 0 8px 24px 0 rgba(62,111,244,0.22), 0 2px 0 0 #000;
+    opacity: 1 !important; /* Ensure always visible on hover and after hover */
 }
 
 /* --- Elegant Footer --- */
@@ -567,161 +567,39 @@ button:hover,
     box-shadow: 0 8px 24px 0 rgba(62,111,244,0.22), 0 2px 0 0 #000;
 }
 
-/* Dropdown menu: fade in and slide from left */
-@keyframes navMenuSlideIn {
-    0% {
-        opacity: 0;
-        transform: translateX(-40px) scale(0.95);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-    }
+/* --- Jiggle Animation for Buttons --- */
+@keyframes btnJiggleIn {
+    0% { transform: scale(1) rotate(0deg); }
+    30% { transform: scale(1.08) rotate(-4deg); }
+    60% { transform: scale(0.96) rotate(3deg); }
+    80% { transform: scale(1.04) rotate(-2deg); }
+    100% { transform: scale(1.10) rotate(0deg); }
 }
-.dropdown-nav.open .nav-menu {
-    animation: navMenuSlideIn 0.3s cubic-bezier(.4,0,.2,1);
-}
-
-/* Header: fade in and slide from top */
-@keyframes headerSlideIn {
-    0% {
-        opacity: 0;
-        transform: translateY(-60px) scale(0.96);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-header {
-    animation: headerSlideIn 0.5s cubic-bezier(.4,0,.2,1);
+@keyframes btnJiggleOut {
+    0% { transform: scale(1.10) rotate(0deg); }
+    40% { transform: scale(0.98) rotate(2deg); }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
-/* Footer: fade in and slide from bottom */
-@keyframes footerSlideIn {
-    0% {
-        opacity: 0;
-        transform: translateY(60px) scale(0.96);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-footer {
-    animation: footerSlideIn 0.5s cubic-bezier(.4,0,.2,1);
-}
-
-/* Main fade-in: simple fade */
-@keyframes mainFadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-main, .game-list {
-    animation: mainFadeIn 0.7s cubic-bezier(.4,0,.2,1);
-}
-
-/* Ensure dropdown menu is always above cards */
-.dropdown-nav,
-.nav-menu,
-.dropdown-nav.open .nav-menu {
-    z-index: 2000 !important;
-}
-
-/* Prevent cards from overlapping the menu */
-.game-item {
-    z-index: 1;
-    position: relative;
-}
-
-/* Add or update these rules for a glassmorphic blur effect on all main surfaces */
-
-/* Main content blur */
-main {
-    background: rgba(35, 41, 70, 0.35);
-    box-shadow: 0 8px 48px 0 rgba(35,41,70,0.10);
-    backdrop-filter: blur(24px) saturate(1.2);
-    -webkit-backdrop-filter: blur(24px) saturate(1.2);
-    border-radius: 24px;
-    animation: fadeIn 1.2s;
-}
-
-/* Game cards blur */
-.game-item {
-    background: rgba(26, 31, 60, 0.28);
-    border: 1.5px solid #b8c1ec;
-    border-radius: 16px;
-    padding: 22px 28px;
-    margin: 24px 0;
-    box-shadow: 0 4px 24px rgba(35, 41, 70, 0.13);
-    backdrop-filter: blur(18px) saturate(1.2);
-    -webkit-backdrop-filter: blur(18px) saturate(1.2);
-    opacity: 0;
-    transform: translateX(-60px) scale(0.96) rotate(-2deg);
-    animation: cardSlideFadeIn 0.85s cubic-bezier(.33,1,.68,1) forwards;
+/* Apply jiggle on hover and smooth out on mouse leave */
+button,
+.play-btn,
+.theme-toggle-btn,
+.nav-toggle {
     transition:
-        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
-        transform 0.22s cubic-bezier(.4,0,.2,1),
-        border-color 0.18s cubic-bezier(.4,0,.2,1),
-        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- make background fade smoother */
+        background 0.25s cubic-bezier(.4,0,.2,1),
+        color 0.25s cubic-bezier(.4,0,.2,1),
+        box-shadow 0.32s cubic-bezier(.4,0,.2,1),
         filter 0.18s cubic-bezier(.4,0,.2,1);
-}
-.game-item:hover {
-    box-shadow: 0 0 0 6px #eebbc3aa, 0 16px 48px 0 rgba(62,111,244,0.22);
-    transform: scale(1.07) rotate(2deg) translateY(-8px);
-    border-color: #eebbc3;
-    background: linear-gradient(100deg, #232946 60%, #3e6ff4 100%);
-    filter: brightness(1.18) saturate(1.18);
-    z-index: 3;
-    transition:
-        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
-        transform 0.22s cubic-bezier(.4,0,.2,1),
-        border-color 0.18s cubic-bezier(.4,0,.2,1),
-        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- match fade duration */
-        filter 0.18s cubic-bezier(.4,0,.2,1);
+    will-change: transform, box-shadow, background, color;
 }
 
-/* Header blur */
-header {
-    background: rgba(26, 31, 60, 0.28);
-    backdrop-filter: blur(18px) saturate(1.2);
-    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+/* Use a class for JS-triggered animation */
+.jiggle-in {
+    animation: btnJiggleIn 0.45s cubic-bezier(.33,1,.68,1);
 }
-
-/* Footer blur */
-footer {
-    background: rgba(26, 31, 60, 0.28);
-    backdrop-filter: blur(18px) saturate(1.2);
-    -webkit-backdrop-filter: blur(18px) saturate(1.2);
-}
-
-/* Navigation menu blur */
-.nav-menu {
-    background: rgba(35,41,70,0.22);
-    backdrop-filter: blur(18px) saturate(1.2);
-    -webkit-backdrop-filter: blur(18px) saturate(1.2);
-}
-
-/* Light mode adjustments */
-body.light-mode main,
-body.light-mode .game-item,
-body.light-mode header,
-body.light-mode footer,
-body.light-mode .nav-menu {
-    background: rgba(255,255,255,0.45) !important;
-    backdrop-filter: blur(18px) saturate(1.2) !important;
-    -webkit-backdrop-filter: blur(18px) saturate(1.2) !important;
-}
-
-/* Add to the end of your styles.css */
-/* filepath: h:\Github Project\online-games-website\css\styles.css */
-body.no-animated-bg {
-    background: linear-gradient(135deg, #181f3a 0%, #232946 100%) !important;
-    animation: none !important;
-}
-body.no-animated-bg::before {
-    background: inherit !important;
-    animation: none !important;
+.jiggle-out {
+    animation: btnJiggleOut 0.32s cubic-bezier(.33,1,.68,1);
 }
 
 /* --- Mobile Friendly Styles --- */

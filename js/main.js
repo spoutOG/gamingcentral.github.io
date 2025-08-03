@@ -60,6 +60,27 @@ document.addEventListener('DOMContentLoaded', function () {
     if (localStorage.getItem('animations') === 'off') {
         document.body.classList.add('no-animations');
     }
+
+    // Jiggle animation for buttons on hover in/out
+    function addJiggleEffect(selector) {
+        document.querySelectorAll(selector).forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.classList.remove('jiggle-out');
+                btn.classList.add('jiggle-in');
+            });
+            btn.addEventListener('animationend', () => {
+                btn.classList.remove('jiggle-in');
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.classList.remove('jiggle-in');
+                btn.classList.add('jiggle-out');
+            });
+            btn.addEventListener('animationend', () => {
+                btn.classList.remove('jiggle-out');
+            });
+        });
+    }
+    addJiggleEffect('button, .play-btn, .theme-toggle-btn, .nav-toggle');
 });
 
 // Animated color-changing glowing orbs wallpaper (major revamp)

@@ -3,7 +3,7 @@
 Welcome to the **Online Games Showcase**! 🚀  
 This is your friendly hub for discovering and playing a curated collection of fun online games — all in one place.
 
-✨ **Features:**
+✨ **Features:** ✨
 - Instantly play a variety of games with just one click!
 - Sleek, modern design with animated backgrounds and glassy effects.
 - Mobile-friendly and easy to use on any device.
