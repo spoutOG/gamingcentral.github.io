@@ -8,18 +8,40 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" type="image/svg+xml" href="icon.png">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 60% 10%, #111 0%, #181a22 100%);
+            color: #f5f5f5;
+            overflow-x: hidden;
         }
-
-
+        header {
+            background: linear-gradient(90deg, #181818 60%, #000 100%);
+            color: #fff;
+            padding: 36px 0 18px 0;
+            text-align: center;
+            border-bottom: 2px solid #fff2;
+            border-radius: 0 0 32px 32px;
+            position: relative;
+            z-index: 10;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 48px 0 #fff2;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 4px 32px #fff, 0 2px 12px #222;
+        }
         .settings-container {
-            max-width: 500px;
-            margin: 80px auto 0 auto;
-            padding: 32px 24px;
+            max-width: 420px;
+            margin: 48px auto 0 auto;
+            padding: 32px 24px 24px 24px;
             background: rgba(35,41,70,0.35);
             border-radius: 24px;
             box-shadow: 0 8px 48px 0 rgba(35,41,70,0.10);
@@ -29,36 +51,48 @@
         .settings-container h2 {
             margin-top: 0;
             color: #b8c1ec;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-align: center;
         }
         .setting-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 24px 0;
+            margin: 22px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #23294644;
+        }
+        .setting-row:last-child {
+            border-bottom: none;
         }
         .setting-row label {
-            font-size: 1.1rem;
-            color: #eebbc3;
+            font-size: 1.08rem;
+            color: #ffffff;
+            text-shadow: #3a3a3a 0px 0px 4px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
-        /* Make the animated background toggle a circular button */
         .setting-row input[type="checkbox"] {
             width: 32px;
             height: 32px;
-            accent-color: #3e6ff4;
+            accent-color: #3a3a3a;
             border-radius: 50%;
             appearance: none;
             -webkit-appearance: none;
             outline: none;
-            border: 2px solid #3e6ff4;
+            border: 2px solid #222222;
             background: #232946;
             cursor: pointer;
             display: inline-block;
-            transition: box-shadow 0.2s, border-color 0.2s;
+            transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
             position: relative;
         }
         .setting-row input[type="checkbox"]:checked {
-            background: #3e6ff4;
+            background: #000000;
             border-color: #b8c1ec;
+            box-shadow: 0 0 0 3px #b8c1ec55;
         }
         .setting-row input[type="checkbox"]::after {
             content: '';
@@ -66,7 +100,7 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: #2a4ec2;
+            background: #b8c1ec;
             position: absolute;
             top: 6px;
             left: 6px;
@@ -76,10 +110,24 @@
         .setting-row input[type="checkbox"]:checked::after {
             opacity: 1;
         }
-
+        @media (max-width: 600px) {
+            .settings-container {
+                max-width: 98vw;
+                padding: 18px 4vw 18px 4vw;
+                border-radius: 12px;
+            }
+            header {
+                border-radius: 0 0 16px 16px;
+                padding: 18px 0 10px 0;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <canvas id="animated-dots-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
     <header>
         <h1>Settings</h1>
         <nav class="dropdown-nav">
@@ -107,9 +155,12 @@
                 <label for="toggle-animations">Enable Animations</label>
                 <input type="checkbox" id="toggle-animations" checked>
             </div>
+            <div class="setting-row">
+                <label for="toggle-rainbow-glow">Rainbow Text Glow</label>
+                <input type="checkbox" id="toggle-rainbow-glow" checked>
+            </div>
         </div>
     </main>
-    <canvas id="animated-dots-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
     <script>
     // Settings: Animated BG toggle
     const bgToggle = document.getElementById('toggle-animated-bg');
@@ -172,6 +223,42 @@
         });
     }
     applyAnimSetting();
+
+    // Rainbow Glow toggle
+    const rainbowToggle = document.getElementById('toggle-rainbow-glow');
+    function applyRainbowSetting() {
+        const enabled = localStorage.getItem('rainbowGlow') !== 'off';
+        document.body.classList.toggle('rainbow-glow', enabled);
+        if(rainbowToggle) rainbowToggle.checked = enabled;
+    }
+    if(rainbowToggle) {
+        rainbowToggle.addEventListener('change', function() {
+            if(this.checked) {
+                localStorage.setItem('rainbowGlow', 'on');
+            } else {
+                localStorage.setItem('rainbowGlow', 'off');
+            }
+            applyRainbowSetting();
+        });
+    }
+    applyRainbowSetting();
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Menu toggle logic for dropdown-nav
+        document.querySelectorAll('.nav-toggle').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var nav = btn.closest('.dropdown-nav');
+                nav.classList.toggle('open');
+            });
+        });
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            document.querySelectorAll('.dropdown-nav.open').forEach(function(nav) {
+                if (!nav.contains(e.target)) nav.classList.remove('open');
+            });
+        });
+    });
     </script>
     <script src="js/main.js"></script>
 </body>

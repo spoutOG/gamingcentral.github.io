@@ -11,8 +11,11 @@ This is your friendly hub for discovering and playing a curated collection of fu
 - Light and dark modes for your comfort. 🌗
 
 Whether you’re here to relax, compete, or just have fun, we hope you enjoy exploring and playing!  
-Have feedback or ideas? Let us know — we’re always working to make the site even better. 😄
+Have feedback or ideas? Let us know — we’re mostly always working to make the site even better. 😄
+
+*Hint:*
+Hardly working or working hard?
 
 **Enjoy your stay**
 
-Version info: Release 1.3 - Stable (ish) light mode is indev.
+**Version info:** Release 1.4.1 - Stable (ish) light mode does not look very good yet (sorry).

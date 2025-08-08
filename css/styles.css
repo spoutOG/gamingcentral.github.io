@@ -1,679 +1,499 @@
-/* Replace animated gradient background with a static dark blue wallpaper */
+/* --- Pure Black Elegant Theme with Enhanced Animations --- */
+
+/* Remove blur from the whole HTML */
+html {
+    filter: none !important;
+}
+
+/* Base styles */
 body {
     font-family: 'Poppins', sans-serif;
+    background: radial-gradient(ellipse at 60% 10%, #111 0%, #000 100%);
+    color: #f5f5f5;
     margin: 0;
-    padding: 0;
     min-height: 100vh;
-    background: #181f3a; /* solid dark blue */
-    color: #eebbc3;
-    transition: background-color 0.6s cubic-bezier(0.4,0,0.2,1), color 0.6s cubic-bezier(0.4,0,0.2,1);
-    position: relative;
-    z-index: 1;
-    /* Remove gradient and animation */
-    background-image: none !important;
-    animation: none !important;
+    transition: background 1.2s cubic-bezier(.4,0,.2,1), color 0.8s cubic-bezier(.4,0,.2,1);
+    overflow-x: hidden;
 }
 
-body::before {
-    /* Remove gradient and keep blur for glass effect */
-    background: none !important;
-    filter: blur(24px) brightness(0.9) saturate(1.2);
-    opacity: 0.7;
-    transition: filter 1.2s cubic-bezier(.4,0,.2,1), opacity 0.8s cubic-bezier(.4,0,.2,1);
-}
-body > * {
-    position: relative;
-    z-index: 1;
+/* Remove blur from main content so it's readable */
+body, main, header, .game-item, .dropdown-nav, .nav-menu, .play-btn, .theme-toggle-btn, .settings-btn, footer {
+    filter: none !important;
 }
 
-/* Light mode override for background */
-body.light-mode {
-    background: linear-gradient(135deg, #f6f8ff 0%, #b8c1ec 100%) !important;
-}
-body.light-mode::before {
-    background: inherit;
-    filter: blur(12px) brightness(1.08);
-    opacity: 0.5;
+/* Animated background canvas */
+#animated-dots-bg {
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(12px) brightness(1.1) saturate(1.08);
+    mix-blend-mode: lighten;
 }
 
-/* Force text color for all elements in light mode */
-body.light-mode,
-body.light-mode * {
-    color: #232946 !important;
-    text-shadow: none !important;
-}
-
-/* --- Elegant Header --- */
+/* Header */
 header {
-    background: rgba(26, 31, 60, 0.92);
-    color: #eebbc3;
-    padding: 32px 0 18px 0;
+    background: linear-gradient(90deg, #181818 60%, #000 100%);
+    color: #fff;
+    padding: 40px 0 24px 0;
     text-align: center;
-    border-bottom: 2px solid #b8c1ec33;
-    box-shadow: 0 4px 24px 0 rgba(35,41,70,0.10);
-    animation: fadeInDown 1s;
-    backdrop-filter: blur(8px);
-    border-radius: 0 0 24px 24px;
+    border-bottom: 2px solid #fff2;
+    animation: headerEnter 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    border-radius: 0 0 32px 32px;
+    position: relative;
+    z-index: 10;
+}
+
+/* --- New Header Entrance Animation --- */
+@keyframes headerEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.98);
+        filter: blur(4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 
 h1 {
     margin: 0;
-    font-size: 2.6rem;
-    font-weight: 600;
+    font-size: 3.2rem;
+    font-weight: 700;
     letter-spacing: 2px;
-    animation: fadeIn 1.2s;
-    color: #b8c1ec;
-    text-shadow: 0 2px 12px #23294644;
+    color: #fff;
+    text-shadow: 0 4px 32px #fff, 0 2px 12px #222;
+    animation: textGlowIn 1.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
+
+/* --- New Text Glow-In Animation --- */
+@keyframes textGlowIn {
+    from {
+        opacity: 0;
+        text-shadow: 0 0 8px #ffffff00, 0 0 16px #ffffff00;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        text-shadow: 0 4px 32px #fff, 0 2px 12px #222;
+        transform: translateY(0);
+    }
+}
+
 h2 {
-    font-size: 2rem;
-    font-weight: 500;
-    color: #eebbc3;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #fff;
     margin-bottom: 18px;
     letter-spacing: 1px;
+    text-shadow: 0 2px 12px #fff;
+    animation: textGlowIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) 0.2s; /* Staggered start */
+    animation-fill-mode: backwards;
 }
-h3 {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: #b8c1ec;
+h3, h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #eee;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 8px #fff;
+    animation: fadeIn 1.2s;
+}
+
+/* Navigation */
+.dropdown-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    z-index: 1001;
+}
+.nav-toggle {
+    background: linear-gradient(90deg, #222 60%, #000 100%);
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    padding: 14px 32px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.18em;
+    cursor: pointer;
+    box-shadow: 0 4px 24px #fff2;
+    transition: background 0.4s cubic-bezier(0.2, 1, 0.2, 1), color 0.4s, box-shadow 0.4s, transform 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+    outline: none;
     margin-bottom: 8px;
 }
 
-/* --- Elegant Navigation Dropdown --- */
-.dropdown-nav {
-    position: fixed;
-    top: 40px;
-    left: 0;
-    z-index: 2000 !important;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-.nav-toggle {
-    background: #b8c1ec;
-    color: #232946;
-    border: none;
-    border-radius: 12px;
-    padding: 12px 28px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 1.1em;
-    cursor: pointer;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-    transition: background 0.2s, color 0.2s, box-shadow 0.3s, transform 0.2s;
-    outline: none;
-    position: relative;
-    z-index: 101;
-    margin-left: 18px;
-    margin-bottom: 8px;
-}
+/* --- ADJUSTED HOVER EFFECT --- */
 .nav-toggle:hover,
 .nav-toggle:focus {
-    background: #eebbc3;
-    color: #232946;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-    transform: scale(1.05);
+    background: linear-gradient(90deg, #fff 60%, #222 100%);
+    color: #000;
+    box-shadow: 0 8px 28px #ffffff33;
+    transform: translateY(-4px) scale(1.05);
 }
 .nav-menu {
-    position: fixed;
-    top: 80px;
-    left: 0;
+    position: absolute;
+    top: 60px;
+    right: 0;
     min-width: 220px;
-    border-radius: 0 18px 18px 0;
-    box-shadow: 8px 0 32px rgba(35,41,70,0.18);
-    background: #232946cc;
+    border-radius: 0 24px 24px 0;
+    background: linear-gradient(90deg, #181818cc 60%, #000c 100%);
+    display: none;
     opacity: 0;
     pointer-events: none;
-    transform: translateX(-30px) scale(0.98);
+    transform: translateX(-40px) scale(0.96);
     transition:
-        opacity 0.45s cubic-bezier(.4,0,.2,1),
-        transform 0.45s cubic-bezier(.4,0,.2,1),
-        box-shadow 0.45s cubic-bezier(.4,0,.2,1),
-        background 0.35s cubic-bezier(.4,0,.2,1);
+        opacity 0.55s cubic-bezier(.4,0,.2,1),
+        transform 0.55s cubic-bezier(.4,0,.2,1),
+        box-shadow 0.55s cubic-bezier(.4,0,.2,1),
+        background 0.45s cubic-bezier(.4,0,.2,1);
     overflow: hidden;
     z-index: 2001;
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
 }
 .dropdown-nav.open .nav-menu {
+    display: block;
     opacity: 1;
     pointer-events: auto;
     transform: translateX(0) scale(1);
+    animation: navMenuAppear 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+/* --- New Nav Menu Animation --- */
+@keyframes navMenuAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(-24px) scale(0.9);
+        filter: blur(3px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 .nav-menu li {
-    border-bottom: 1px solid #b8c1ec22;
-    animation: navItemFadeIn 0.5s both;
+    border-bottom: 1px solid #fff2;
+    opacity: 0;
+    animation: navItemFadeIn 0.6s cubic-bezier(0.2, 1, 0.2, 1) forwards;
 }
-.nav-menu li:last-child {
-    border-bottom: none;
-}
+/* Staggered animation for nav items */
+.nav-menu li:nth-child(1) { animation-delay: 0.1s; }
+.nav-menu li:nth-child(2) { animation-delay: 0.18s; }
+.nav-menu li:nth-child(3) { animation-delay: 0.26s; }
+.nav-menu li:nth-child(4) { animation-delay: 0.34s; }
+
+
 @keyframes navItemFadeIn {
-    from { opacity: 0; transform: translateY(10px);}
-    to { opacity: 1; transform: translateY(0);}
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 .nav-menu a {
     display: block;
-    padding: 18px 32px 18px 28px;
-    color: #eebbc3;
+    padding: 22px 40px 22px 32px;
+    color: #fff;
     text-decoration: none;
-    font-size: 1.08em;
-    transition: background 0.2s, color 0.2s, padding-left 0.2s;
-    border-radius: 0 12px 12px 0;
+    font-size: 1.15em;
+    transition: background 0.3s, color 0.3s, padding-left 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+    border-radius: 0 16px 16px 0;
 }
 .nav-menu a:hover {
-    background: #b8c1ec;
-    color: #232946;
-    padding-left: 40px;
+    background: linear-gradient(90deg, #fff 60%, #222 100%);
+    color: #000;
+    padding-left: 52px;
+    box-shadow: 0 2px 12px #fff;
 }
 
-/* --- Elegant Main Content --- */
+/* Theme toggle and settings button */
+.theme-toggle-btn {
+    position: static;
+    display: inline-block;
+    margin: 24px 12px 0 0;
+    z-index: 1000;
+    vertical-align: middle;
+    background: linear-gradient(90deg, #222 60%, #000 100%);
+    color: #fff;
+    border: none;
+    border-radius: 32px;
+    padding: 14px 36px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.15em;
+    cursor: pointer;
+    box-shadow: 0 4px 18px #fff2;
+    transition: background 0.4s cubic-bezier(0.2, 1, 0.2, 1), color 0.3s, box-shadow 0.4s, transform 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+/* --- ADJUSTED HOVER EFFECT --- */
+.theme-toggle-btn:hover {
+    background: linear-gradient(90deg, #fff 60%, #222 100%);
+    color: #000;
+    box-shadow: 0 8px 28px #ffffff33;
+    transform: translateY(-4px) scale(1.05);
+}
+.settings-btn {
+    position: static;
+    display: inline-block;
+    margin: 24px 0 0 0;
+    vertical-align: middle;
+}
+.settings-btn .theme-toggle-btn {
+    margin-left: 0;
+    padding: 14px 18px;
+    font-size: 1.15em;
+}
+
+/* Responsive: stack buttons below header on mobile */
+@media (max-width: 700px) {
+    .theme-toggle-btn,
+    .settings-btn {
+        display: block;
+        margin: 12px auto 0 auto;
+        text-align: center;
+    }
+    .dropdown-nav {
+        position: static;
+        margin-top: 12px;
+        right: auto;
+        align-items: center;
+    }
+}
+
+/* Main content */
 main {
-    max-width: 900px;
-    margin: 36px auto 0 auto;
-    padding: 32px 18px 48px 18px;
-    border-radius: 24px;
-    background: rgba(35, 41, 70, 0.35);
-    box-shadow: 0 8px 48px 0 rgba(35,41,70,0.10);
-    backdrop-filter: blur(24px) saturate(1.2);
-    -webkit-backdrop-filter: blur(24px) saturate(1.2);
-    animation: fadeIn 1.2s;
+    max-width: 1000px;
+    margin: 48px auto 0 auto;
+    padding: 40px 24px 64px 24px;
+    border-radius: 32px;
+    background: linear-gradient(120deg, #181818cc 60%, #000c 100%);
+    animation: mainContentEnter 1.4s cubic-bezier(0.19, 1, 0.22, 1) 0.2s; /* Staggered start */
+    animation-fill-mode: backwards;
+    position: relative;
+    z-index: 2;
+}
+/* --- New Main Content Entrance Animation --- */
+@keyframes mainContentEnter {
+    from {
+        opacity: 0;
+        transform: translateY(60px) scale(0.96);
+        filter: blur(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 section {
-    margin-bottom: 32px;
+    margin-bottom: 40px;
+    animation: fadeIn 1.2s;
 }
+
+/* --- More Fluid Game Card Hover & Entrance --- */
 .game-list {
     background: transparent;
     animation: fadeIn 1.5s;
 }
 .game-item {
-    background: rgba(26, 31, 60, 0.28);
-    border: 1.5px solid #b8c1ec;
-    border-radius: 16px;
-    padding: 22px 28px;
-    margin: 24px 0;
-    box-shadow: 0 4px 24px rgba(35, 41, 70, 0.13);
-    backdrop-filter: blur(18px) saturate(1.2);
-    -webkit-backdrop-filter: blur(18px) saturate(1.2);
-    opacity: 0;
-    transform: translateX(-60px) scale(0.96) rotate(-2deg);
-    animation: cardSlideFadeIn 0.85s cubic-bezier(.33,1,.68,1) forwards;
-    transition:
-        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
-        transform 0.22s cubic-bezier(.4,0,.2,1),
-        border-color 0.18s cubic-bezier(.4,0,.2,1),
-        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- make background fade smoother */
-        filter 0.18s cubic-bezier(.4,0,.2,1);
+    background: rgba(20, 20, 20, 0.85);
+    border: 2px solid #fff2;
+    border-radius: 20px;
+    padding: 28px 36px;
+    margin: 32px 0;
+    opacity: 1;
     z-index: 1;
-    position: relative;
-}
-.game-item:hover {
-    box-shadow: 0 0 0 6px #eebbc3aa, 0 16px 48px 0 rgba(62,111,244,0.22);
-    transform: scale(1.07) rotate(2deg) translateY(-8px);
-    border-color: #eebbc3;
-    background: linear-gradient(100deg, #232946 60%, #3e6ff4 100%);
-    filter: brightness(1.18) saturate(1.18);
-    z-index: 3;
-    transition:
-        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
-        transform 0.22s cubic-bezier(.4,0,.2,1),
-        border-color 0.18s cubic-bezier(.4,0,.2,1),
-        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- match fade duration */
-        filter 0.18s cubic-bezier(.4,0,.2,1);
-}
-/* --- Elegant Buttons --- */
-.play-btn {
-    background-color: #3e6ff4;
-    color: #fff;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 8px;
-    font-size: 1.08rem;
-    font-family: 'Poppins', sans-serif;
-    cursor: pointer;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.18), 0 2px 0 0 #000;
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-    margin-top: 16px;
-    margin-left: 24px;
-    opacity: 1; /* Always visible after fade-in */
-    animation: btnFadeIn 1s forwards;
-    animation-delay: 1s;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-@keyframes btnFadeIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.92);
-    }
-    60% {
-        opacity: 1;
-        transform: scale(1.08);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-.play-btn:hover {
-    background: linear-gradient(90deg, #3e6ff4 60%, #eebbc3 100%);
-    color: #232946;
-    transform: scale(1.12);
-    /* Remove animation property to prevent flicker/disappear */
-    box-shadow: 0 8px 24px 0 rgba(62,111,244,0.22), 0 2px 0 0 #000;
-    opacity: 1 !important; /* Ensure always visible on hover and after hover */
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    border: 1px solid #ffffff1a;
+    box-shadow: 0 8px 32px 0 #0000004d;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+                box-shadow 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+                border-color 0.5s ease,
+                background 0.5s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: cardFadeInUp 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
 
-/* --- Elegant Footer --- */
+@keyframes cardFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Staggered animation for game items */
+.game-item:nth-child(1) { animation-delay: 0.3s; }
+.game-item:nth-child(2) { animation-delay: 0.4s; }
+.game-item:nth-child(3) { animation-delay: 0.5s; }
+/* Add more if needed */
+
+.game-item:hover {
+    transform: translateY(-12px) scale(1.04) rotate(-1deg);
+    box-shadow: 0 28px 56px 0 #00000080, 0 0 0 2px #ffffffcc;
+    border-color: #ffffffcc;
+    background: rgba(30, 30, 30, 0.7);
+    filter: drop-shadow(0 10px 15px #0000004d);
+    z-index: 3;
+}
+
+/* Play Now button with enhanced feedback */
+@keyframes buttonPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1) rotate(-3deg); }
+    100% { transform: scale(1.05) rotate(1deg); }
+}
+
+.play-btn {
+    background: linear-gradient(90deg, #222 60%, #111 100%);
+    color: #fff;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 12px;
+    font-size: 1.15rem;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 18px 0 #fff2, 0 2px 0 0 #222;
+    transition: background 0.3s, transform 0.2s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.3s, filter 0.2s;
+    margin-top: 18px;
+    margin-left: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+}
+.play-btn:hover {
+    background: linear-gradient(90deg, #292929 60%, #181818 100%);
+    color: #fff;
+    box-shadow: 0 6px 24px 0 #fff4, 0 2px 0 0 #222;
+    filter: brightness(1.05) saturate(1.05);
+    animation: buttonPop 0.4s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+}
+.play-btn:active {
+    transform: scale(0.96) rotate(0deg);
+    transition: transform 0.1s;
+}
+
+/* Dropdowns for game categories */
+.game-dropdown {
+    display: block;
+    margin-bottom: 24px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: none;
+    border: none;
+    box-shadow: 0 2px 12px 0 #fff2;
+    transition: box-shadow 0.4s cubic-bezier(.4,0,.2,1), background 0.5s cubic-bezier(.4,0,.2,1);
+    will-change: box-shadow, background;
+    position: relative;
+    z-index: 2;
+}
+.game-dropdown[open] {
+    box-shadow: 0 8px 32px 0 #fff;
+    background: linear-gradient(120deg, #181818 60%, #000 100%);
+    padding: 18px 24px;
+}
+.game-dropdown > summary {
+    cursor: pointer;
+    font-size: 1.22rem;
+    font-weight: 700;
+    color: #fff;
+    padding: 24px 36px;
+    background: linear-gradient(90deg, #181818 60%, #000 100%);
+    border-radius: 16px;
+    outline: none;
+    transition: background 0.5s cubic-bezier(0.2, 1, 0.2, 1), color 0.5s, box-shadow 0.5s, transform 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+    user-select: none;
+    list-style: none;
+    box-shadow: 0 2px 12px #fff2;
+    position: relative;
+    z-index: 3;
+}
+.game-dropdown > summary:hover,
+.game-dropdown > summary:focus {
+    background: linear-gradient(90deg, #fff 60%, #222 100%);
+    color: #000;
+    box-shadow: 0 8px 32px #fff;
+    transform: scale(1.04) rotate(-2deg);
+}
+.game-dropdown[open] > summary {
+    background: linear-gradient(90deg, #fff 60%, #222 100%);
+    color: #000;
+    transform: scale(1.04) rotate(-2deg);
+}
+
+/* --- New Smoother Dropdown Content Animation --- */
+.game-dropdown > *:not(summary) {
+    display: block;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: translateY(-20px) scaleY(0.98);
+    transition:
+        opacity 0.6s cubic-bezier(.33,1,.68,1),
+        max-height 0.7s cubic-bezier(.33,1,.68,1),
+        transform 0.6s cubic-bezier(.33,1,.68,1);
+    will-change: opacity, max-height, transform;
+    pointer-events: none;
+}
+.game-dropdown[open] > *:not(summary) {
+    opacity: 1;
+    max-height: 2000px;
+    transform: translateY(0) scaleY(1);
+    pointer-events: auto;
+}
+
+/* Footer */
 footer {
     text-align: center;
-    padding: 24px 0 16px 0;
-    background: rgba(26, 31, 60, 0.28);
-    color: #eebbc3;
+    padding: 32px 0 20px 0;
+    background: linear-gradient(90deg, #181818cc 60%, #000c 100%);
+    color: #fff;
     position: relative;
     bottom: 0;
     width: 100%;
-    animation: fadeInUp 1.2s;
-    border-radius: 24px 24px 0 0;
-    box-shadow: 0 -4px 24px 0 rgba(35,41,70,0.10);
-    backdrop-filter: blur(18px) saturate(1.2);
-    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    animation: footerEnter 1s cubic-bezier(.33,1,.68,1) 0.5s; /* Staggered start */
+    animation-fill-mode: backwards;
+    border-radius: 32px 32px 0 0;
 }
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(40px) scale(0.98);
-    }
-    60% {
-        opacity: 1;
-        transform: translateY(-6px) scale(1.02);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+@keyframes footerEnter {
+    0% { opacity: 0; transform: translateY(40px);}
+    100% { opacity: 1; transform: translateY(0);}
 }
 
-/* --- Elegant Theme Toggle Button --- */
-.theme-toggle-btn {
-    position: fixed;
-    top: 24px;
-    right: 32px;
-    background: #b8c1ec;
-    color: #232946;
-    border: none;
-    border-radius: 24px;
-    padding: 12px 28px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1.08em;
-    cursor: pointer;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-    z-index: 1000;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
-}
-.theme-toggle-btn:hover {
-    background: #5b72d6;
-    color: #232946;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-    transform: scale(1.06);
+/* --- Enhanced Blur and Depth Effect --- */
+main, header, footer, .nav-menu {
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid #ffffff1a;
+    box-shadow: 0 16px 48px 0 #00000066;
 }
 
-/* --- Light Mode Adjustments --- */
-body.light-mode,
-body.light-mode .game-list,
-body.light-mode .game-item,
-body.light-mode header,
-body.light-mode footer {
-    background-color: #f6f8ff !important;
-    color: #232946 !important;
-}
-body.light-mode header,
-body.light-mode footer {
-    background: #b8c1ec !important;
-    color: #232946 !important;
-    box-shadow: 0 4px 24px 0 rgba(184,193,236,0.10);
-}
-body.light-mode main {
-    background: rgba(255,255,255,0.85);
-    box-shadow: 0 8px 48px 0 rgba(184,193,236,0.10);
-    backdrop-filter: blur(6px);
-}
-body.light-mode .game-item {
-    background: rgba(255,255,255,0.85) !important;
-    border-color: #b8c1ec !important;
-    box-shadow: 0 2px 12px rgba(184, 193, 236, 0.15) !important;
-    color: #232946 !important;
-    filter: none !important;
-}
-body.light-mode .game-item h3,
-body.light-mode .game-item p {
-    color: #232946 !important;
-    text-shadow: none !important;
-}
-body.light-mode .game-item:hover {
-    background: linear-gradient(90deg, #eaf0ff 60%, #b8c1ec 100%) !important;
-    border-color: #3e6ff4 !important;
-    box-shadow: 0 0 0 6px #b8c1ec88, 0 16px 48px 0 #b8c1ec33 !important;
-    filter: brightness(1.04) saturate(1.08) !important;
-}
-body.light-mode .play-btn {
-    background: #3e6ff4 !important;
-    color: #fff !important;
-    box-shadow: 0 2px 12px rgba(62,111,244,0.12) !important;
-}
-body.light-mode .play-btn:hover {
-    background: linear-gradient(90deg, #b8c1ec 60%, #3e6ff4 100%) !important;
-    color: #232946 !important;
-}
-body.light-mode .dropdown-nav .nav-toggle {
-    background: #232946;
-    color: #eebbc3;
-}
-body.light-mode .dropdown-nav .nav-toggle:hover,
-body.light-mode .dropdown-nav .nav-toggle:focus {
-    background: #3e6ff4;
-    color: #fff;
-}
-body.light-mode .nav-menu {
-    background: #ffffffcc;
-    box-shadow: 8px 0 32px rgba(184,193,236,0.18);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-}
-body.light-mode .nav-menu a {
-    color: #232946 !important;
-}
-body.light-mode .nav-menu a:hover {
-    background: #b8c1ec;
-    color: #232946 !important;
-}
-body.light-mode .game-dropdown {
-    background: rgba(255,255,255,0.65) !important;
-    box-shadow: 0 4px 24px 0 rgba(184,193,236,0.10) !important;
-}
-body.light-mode .game-dropdown > summary {
-    background: #b8c1ec !important;
-    color: #232946 !important;
-    box-shadow: 0 2px 12px #b8c1ec44 !important;
-}
-body.light-mode .game-dropdown[open] > summary {
-    background: #eaf0ff !important;
-    color: #232946 !important;
-}
-body.light-mode .game-dropdown > *:not(summary) {
-    background: transparent !important;
-}
-
-/* --- Smoother and More Inviting Animations --- */
-
-/* Buttons and toggles */
-button,
-.play-btn,
-.theme-toggle-btn,
-.nav-toggle {
-    transition:
-        background 0.25s cubic-bezier(.4,0,.2,1),
-        color 0.25s cubic-bezier(.4,0,.2,1),
-        box-shadow 0.32s cubic-bezier(.4,0,.2,1),
-        transform 0.22s cubic-bezier(.4,0,.2,1);
-    will-change: transform, box-shadow, background, color;
-}
-
-button:hover,
-.play-btn:hover,
-.theme-toggle-btn:hover,
-.nav-toggle:hover {
-    transform: scale(1.13) rotate(-1deg);
-    box-shadow: 0 8px 32px 0 rgba(62,111,244,0.18), 0 2px 0 0 #000;
-}
-
-/* Dropdown menu */
-.nav-menu {
-    transition:
-        opacity 0.45s cubic-bezier(.4,0,.2,1),
-        transform 0.45s cubic-bezier(.4,0,.2,1),
-        box-shadow 0.45s cubic-bezier(.4,0,.2,1),
-        background 0.35s cubic-bezier(.4,0,.2,1);
-}
-
-.dropdown-nav.open .nav-menu {
-    animation: navMenuPop 0.45s cubic-bezier(.4,0,.2,1);
-}
-
-@keyframes navMenuPop {
-    0% {
-        opacity: 0;
-        transform: translateY(-16px) scale(0.96);
-        box-shadow: 0 2px 8px rgba(35,41,70,0.08);
-    }
-    60% {
-        opacity: 1;
-        transform: translateY(4px) scale(1.04);
-        box-shadow: 0 12px 32px rgba(35,41,70,0.18);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        box-shadow: 0 8px 32px rgba(35,41,70,0.18);
-    }
-}
-
-/* Header fade-in */
-@keyframes fadeInDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-40px) scale(0.98);
-    }
-    60% {
-        opacity: 1;
-        transform: translateY(6px) scale(1.02);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Footer fade-in */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(40px) scale(0.98);
-    }
-    60% {
-        opacity: 1;
-        transform: translateY(-6px) scale(1.02);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Main fade-in */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.98);
-    }
-    60% {
-        opacity: 1;
-        transform: scale(1.02);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* --- Totally Different Animation Style: Fade, Slide, and Pulse --- */
-
-/* Game card entrance: fade in and slide from left */
-@keyframes cardSlideFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(40px) scale(0.96) rotate(-2deg);
-        filter: blur(8px);
-    }
-    60% {
-        opacity: 1;
-        transform: translateY(-4px) scale(1.03) rotate(1deg);
-        filter: blur(2px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1) rotate(0deg);
-        filter: blur(0);
-    }
-}
-.game-item {
-    animation: cardSlideFadeIn 0.85s cubic-bezier(.33,1,.68,1) forwards;
-    opacity: 0;
-    transform: translateY(40px) scale(0.96) rotate(-2deg);
-    filter: blur(8px);
-    transition:
-        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
-        transform 0.22s cubic-bezier(.4,0,.2,1),
-        border-color 0.18s cubic-bezier(.4,0,.2,1),
-        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- make background fade smoother */
-        filter 0.18s cubic-bezier(.4,0,.2,1);
-}
-.game-item:hover {
-    box-shadow: 0 0 0 6px #eebbc3aa, 0 16px 48px 0 rgba(62,111,244,0.22);
-    transform: scale(1.07) rotate(2deg) translateY(-8px);
-    border-color: #eebbc3;
-    background: linear-gradient(100deg, #232946 60%, #3e6ff4 100%);
-    filter: brightness(1.18) saturate(1.18);
-    z-index: 3;
-    transition:
-        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
-        transform 0.22s cubic-bezier(.4,0,.2,1),
-        border-color 0.18s cubic-bezier(.4,0,.2,1),
-        background 0.45s cubic-bezier(.4,0,.2,1), /* <--- match fade duration */
-        filter 0.18s cubic-bezier(.4,0,.2,1);
-}
-
-/* Play button: pulse and color sweep on hover */
-@keyframes btnPulse {
-    0% { box-shadow: 0 0 0 0 #3e6ff4aa; }
-    70% { box-shadow: 0 0 0 12px #3e6ff400; }
-    100% { box-shadow: 0 0 0 0 #3e6ff400; }
-}
-.play-btn:hover {
-    background: linear-gradient(90deg, #3e6ff4 60%, #eebbc3 100%);
-    color: #232946;
-    transform: scale(1.12);
-    /* Remove animation property to prevent flicker/disappear */
-    box-shadow: 0 8px 24px 0 rgba(62,111,244,0.22), 0 2px 0 0 #000;
-}
-
-/* --- Jiggle Animation for Buttons --- */
-@keyframes btnJiggleIn {
-    0% { transform: scale(1) rotate(0deg); }
-    30% { transform: scale(1.08) rotate(-4deg); }
-    60% { transform: scale(0.96) rotate(3deg); }
-    80% { transform: scale(1.04) rotate(-2deg); }
-    100% { transform: scale(1.10) rotate(0deg); }
-}
-@keyframes btnJiggleOut {
-    0% { transform: scale(1.10) rotate(0deg); }
-    40% { transform: scale(0.98) rotate(2deg); }
-    100% { transform: scale(1) rotate(0deg); }
-}
-
-/* Apply jiggle on hover and smooth out on mouse leave */
-button,
-.play-btn,
-.theme-toggle-btn,
-.nav-toggle {
-    transition:
-        background 0.25s cubic-bezier(.4,0,.2,1),
-        color 0.25s cubic-bezier(.4,0,.2,1),
-        box-shadow 0.32s cubic-bezier(.4,0,.2,1),
-        filter 0.18s cubic-bezier(.4,0,.2,1);
-    will-change: transform, box-shadow, background, color;
-}
-
-/* Use a class for JS-triggered animation */
-.jiggle-in {
-    animation: btnJiggleIn 0.45s cubic-bezier(.33,1,.68,1);
-}
-.jiggle-out {
-    animation: btnJiggleOut 0.32s cubic-bezier(.33,1,.68,1);
-}
-
-/* --- Mobile Friendly Styles --- */
+/* Responsive */
 @media (max-width: 700px) {
-    header {
-        padding: 18px 0 10px 0;
-        font-size: 1.1rem;
-        border-radius: 0 0 16px 16px;
-    }
-    h1 {
-        font-size: 1.5rem;
-    }
-    h2 {
-        font-size: 1.2rem;
-    }
-    .dropdown-nav {
-        top: 12px;
-    }
-    .nav-toggle {
-        padding: 10px 18px;
-        font-size: 1em;
-        margin-left: 8px;
-    }
-    .nav-menu {
-        min-width: 160px;
-        font-size: 1em;
-        border-radius: 0 12px 12px 0;
-        top: 54px;
-    }
-    main {
-        max-width: 98vw;
-        padding: 12px 2vw 24px 2vw;
-        border-radius: 12px;
-        margin: 12px auto 0 auto;
-    }
-    .settings-container {
-        margin: 32px auto 0 auto;
-        padding: 18px 8px;
-        border-radius: 12px;
-    }
-    .game-list {
-        grid-template-columns: 1fr !important;
-        gap: 14px;
-        margin-top: 10px;
-    }
-    .game-item {
-        padding: 14px 8px;
-        margin: 10px 0;
-        border-radius: 10px;
-    }
-    .play-btn {
-        width: 100%;
-        min-width: 0;
-        font-size: 1em;
-        padding: 12px 0;
-        margin-left: 0;
-        border-radius: 8px;
-    }
-    .theme-toggle-btn {
-        top: 10px;
-        right: 10px;
-        padding: 10px 16px;
-        font-size: 1em;
-        border-radius: 16px;
-    }
-    footer {
-        font-size: 0.95em;
-        padding: 14px 0 10px 0;
-        border-radius: 12px 12px 0 0;
-        margin-top: 18px;
-    }
+    header { padding: 18px 0 10px 0; font-size: 1.1rem; border-radius: 0 0 16px 16px;}
+    h1 { font-size: 1.7rem;}
+    h2 { font-size: 1.2rem;}
+    .dropdown-nav { top: 12px;}
+    .nav-toggle { padding: 10px 18px; font-size: 1em; margin-left: 8px;}
+    .nav-menu { min-width: 160px; font-size: 1em; border-radius: 0 12px 12px 0; top: 54px;}
+    main { max-width: 98vw; padding: 12px 2vw 24px 2vw; border-radius: 12px; margin: 12px auto 0 auto;}
+    .settings-container { margin: 32px auto 0 auto; padding: 18px 8px; border-radius: 12px;}
+    .game-list { grid-template-columns: 1fr !important; gap: 14px; margin-top: 10px;}
+    .game-item { padding: 14px 8px; margin: 10px 0; border-radius: 10px;}
+    .play-btn { width: 100%; min-width: 0; font-size: 1em; padding: 12px 0; margin-left: 0; border-radius: 8px;}
+    .theme-toggle-btn { top: 10px; right: 10px; padding: 10px 16px; font-size: 1em; border-radius: 16px;}
+    footer { font-size: 0.95em; padding: 14px 0 10px 0; border-radius: 12px 12px 0 0; margin-top: 18px;}
 }
 
-/* Performance: Disable blur */
+/* Accessibility & Performance */
 body.no-blur main,
 body.no-blur .game-item,
 body.no-blur header,
@@ -681,106 +501,226 @@ body.no-blur footer,
 body.no-blur .nav-menu {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: rgba(35,41,70,0.95) !important;
+    background: #111 !important;
     box-shadow: none !important;
 }
-
-/* Performance: Disable all animations and transitions */
 body.no-animations *, body.no-animations *:before, body.no-animations *:after {
     animation: none !important;
     transition: none !important;
 }
 
-/* Performance: Lower shadow and blur for all cards and overlays */
-main, .game-item, header, footer, .nav-menu {
-    box-shadow: 0 2px 8px 0 rgba(35,41,70,0.08);
-    backdrop-filter: blur(8px) saturate(1.1);
-    -webkit-backdrop-filter: blur(8px) saturate(1.1);
-}
-
-/* --- Smoother Slide In/Out Animation for Game Dropdown --- */
-.game-dropdown {
-    display: block;
-    margin-bottom: 18px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: none;
-    border: none;
-    transition: box-shadow 0.3s cubic-bezier(.4,0,.2,1), background 0.4s cubic-bezier(.4,0,.2,1);
-    will-change: box-shadow, background;
-}
-
-.game-dropdown[open] {
-    box-shadow: 0 4px 24px 0 rgba(62,111,244,0.13);
-    background: rgba(35, 41, 70, 0.18);
-    padding: 10px 15px;
-    /* Remove animation property here to allow CSS transitions to work on open/close */
-}
-
-.game-dropdown > summary {
-    cursor: pointer;
-    font-size: 1.18rem;
-    font-weight: 600;
-    color: #eebbc3;
-    padding: 20px 30px;
-    background: rgba(35, 41, 70, 0.22);
-    border-radius: 12px;
-    outline: none;
-    transition: background 0.35s cubic-bezier(.4,0,.2,1), color 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s cubic-bezier(.4,0,.2,1), transform 0.25s cubic-bezier(.4,0,.2,1);
-    will-change: background, color, box-shadow, transform;
-}
-.game-dropdown > summary:hover,
-.game-dropdown > summary:focus {
-    background: #3e6ff4;
-    color: #fff;
-}
-.game-dropdown[open] > summary {
-    background: #b8c1ec;
+/* --- Light mode styles --- */
+body.light-mode {
+    background: radial-gradient(ellipse at 60% 10%, #f7f7fa 0%, #e3e6ee 100%);
     color: #232946;
-    transition: background 0.35s, color 0.35s;
+}
+body.light-mode header,
+body.light-mode main,
+body.light-mode .game-item,
+body.light-mode .game-dropdown,
+body.light-mode footer {
+    background: #ffffffaa !important;
+    color: #232946 !important;
+    box-shadow: 0 8px 32px #b8c1ec22, 0 2px 0 0 #b8c1ec11;
+    border-color: #b8c1ec !important;
+}
+body.light-mode .play-btn {
+    background: linear-gradient(90deg, #b8c1ec 60%, #eaf0ff 100%) !important;
+    color: #232946 !important;
+    box-shadow: 0 4px 18px 0 #b8c1ec44, 0 2px 0 0 #b8c1ec11;
+}
+body.light-mode .play-btn:hover {
+    background: linear-gradient(90deg, #eaf0ff 60%, #b8c1ec 100%) !important;
+    color: #232946 !important;
+    box-shadow: 0 4px 18px 0 #b8c1ec88, 0 2px 0 0 #b8c1ec22;
+    filter: brightness(1.04) saturate(1.04);
+    border: none;
+}
+body.light-mode .game-item:hover {
+    box-shadow: 0 0 0 4px #b8c1ec, 0 16px 32px 0 #b8c1ec22;
+    border-color: #3e6ff4;
+    background: linear-gradient(120deg, #eaf0ff 60%, #b8c1ec 100%);
+    filter: brightness(1.08) saturate(1.08) drop-shadow(0 0 8px #b8c1ec);
+}
+body.light-mode .game-dropdown > summary,
+body.light-mode .game-dropdown[open] > summary {
+    background: #b8c1ec !important;
+    color: #232946 !important;
+    box-shadow: 0 2px 12px #b8c1ec44 !importan;
 }
 
-/* --- Slide In/Out Animation for <details> content --- */
-.game-dropdown > *:not(summary) {
-    display: block;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transform: translateY(-32px);
-    transition:
-        opacity 0.5s cubic-bezier(.4,0,.2,1),
-        max-height 0.7s cubic-bezier(.4,0,.2,1),
-        transform 0.6s cubic-bezier(.4,0,.2,1);
-    will-change: opacity, max-height, transform;
-    pointer-events: none;
-}
-.game-dropdown[open] > *:not(summary) {
-    opacity: 1;
-    max-height: 2000px;
-    transform: translateY(0);
-    transition:
-        opacity 0.7s cubic-bezier(.4,0,.2,1),
-        max-height 0.8s cubic-bezier(.4,0,.2,1),
-        transform 0.7s cubic-bezier(.4,0,.2,1);
-    pointer-events: auto;
+/* --- ADJUSTED HOVER EFFECT for Light Mode --- */
+body.light-mode .nav-toggle:hover,
+body.light-mode .theme-toggle-btn:hover {
+    background: linear-gradient(90deg, #eaf0ff 60%, #b8c1ec 100%) !important;
+    color: #232946 !important;
+    box-shadow: 0 8px 28px #b8c1ec66 !important;
 }
 
-/* Optional: Prevent summary from being focusable when closed for accessibility */
-.game-dropdown:not([open]) > *:not(summary) {
-    pointer-events: none;
+/* --- Light mode for dropdown nav menu --- */
+body.light-mode .nav-menu {
+    background: linear-gradient(90deg, #eaf0ffcc 60%, #b8c1ecc 100%) !important;
+    box-shadow: 12px 0 48px #b8c1ec22 !important;
 }
-/* Add styles for the settings button next to theme toggle */
-.settings-btn {
-    position: fixed;
-    top: 24px;
-    right: 32px;
-    z-index: 1000;
-    display: inline-block;
+body.light-mode .nav-menu a {
+    color: #232946 !important;
+}
+body.light-mode .nav-menu a:hover {
+    background: linear-gradient(90deg, #b8c1ec 60%, #eaf0ff 100%) !important;
+    color: #232946 !important;
+    box-shadow: 0 2px 12px #b8c1ec44 !important;
 }
 
-@media (max-width: 700px) {
-    .settings-btn {
-        top: 10px;
-        right: 10px;
+/* --- Ultra-Smooth Animated Rainbow Glow with 100+ Colors --- */
+.rainbow-glow h1,
+.rainbow-glow h2,
+.rainbow-glow h3,
+.rainbow-glow h4 {
+    background: linear-gradient(
+        90deg,
+        #ff6ec4 0%,
+        #ff7ec4 1%,
+        #ff8ec4 2%,
+        #ff9ec4 3%,
+        #ffaec4 4%,
+        #ffbec4 5%,
+        #ffc6c4 6%,
+        #ffd6c4 7%,
+        #ffe6c4 8%,
+        #fff6c4 9%,
+        #f6ffc4 10%,
+        #e6ffc4 11%,
+        #d6ffc4 12%,
+        #c6ffc4 13%,
+        #b6ffc4 14%,
+        #a6ffc4 15%,
+        #96ffc4 16%,
+        #86ffc4 17%,
+        #76ffc4 18%,
+        #66ffc4 19%,
+        #66ffe6 20%,
+        #66fff6 21%,
+        #66f6ff 22%,
+        #66e6ff 23%,
+        #66d6ff 24%,
+        #66c6ff 25%,
+        #66b6ff 26%,
+        #66a6ff 27%,
+        #6696ff 28%,
+        #6686ff 29%,
+        #6676ff 30%,
+        #6666ff 31%,
+        #7666ff 32%,
+        #8666ff 33%,
+        #9666ff 34%,
+        #a666ff 35%,
+        #b666ff 36%,
+        #c666ff 37%,
+        #d666ff 38%,
+        #e666ff 39%,
+        #f666ff 40%,
+        #ff66f6 41%,
+        #ff66e6 42%,
+        #ff66d6 43%,
+        #ff66c6 44%,
+        #ff66b6 45%,
+        #ff66a6 46%,
+        #ff6696 47%,
+        #ff6686 48%,
+        #ff6676 49%,
+        #ff6666 50%,
+        #ff7666 51%,
+        #ff8666 52%,
+        #ff9666 53%,
+        #ffa666 54%,
+        #ffb666 55%,
+        #ffc666 56%,
+        #ffd666 57%,
+        #ffe666 58%,
+        #fff666 59%,
+        #f6ff66 60%,
+        #e6ff66 61%,
+        #d6ff66 62%,
+        #c6ff66 63%,
+        #b6ff66 64%,
+        #a6ff66 65%,
+        #96ff66 66%,
+        #86ff66 67%,
+        #76ff66 68%,
+        #66ff66 69%,
+        #66ff76 70%,
+        #66ff86 71%,
+        #66ff96 72%,
+        #66ffa6 73%,
+        #66ffb6 74%,
+        #66ffc6 75%,
+        #66ffd6 76%,
+        #66ffe6 77%,
+        #66fff6 78%,
+        #66f6ff 79%,
+        #66e6ff 80%,
+        #66d6ff 81%,
+        #66c6ff 82%,
+        #66b6ff 83%,
+        #66a6ff 84%,
+        #6696ff 85%,
+        #6686ff 86%,
+        #6676ff 87%,
+        #6666ff 88%,
+        #7666ff 89%,
+        #8666ff 90%,
+        #9666ff 91%,
+        #a666ff 92%,
+        #b666ff 93%,
+        #c666ff 94%,
+        #d666ff 95%,
+        #e666ff 96%,
+        #f666ff 97%,
+        #ff66f6 98%,
+        #ff6ec4 100%
+    );
+    background-size: 1000% 1000%;
+    background-position: 0% 50%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    animation: rainbowTextMove 12s linear infinite;
+    position: relative;
+    z-index: 1;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+@keyframes rainbowTextMove {
+    0% {
+        background-position: 0% 50%;
     }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.nav-menu {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    min-width: 180px;
+    background: linear-gradient(90deg, #181818cc 60%, #000c 100%);
+    border-radius: 0 16px 16px 0;
+    box-shadow: 12px 0 48px #fff2;
+    z-index: 2001;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.dropdown-nav.open .nav-menu {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
 }
