@@ -1,11 +1,4 @@
-/* --- Pure Black Elegant Theme with Enhanced Animations --- */
-
-/* Remove blur from the whole HTML */
-html {
-    filter: none !important;
-}
-
-/* Base styles */
+/* This file contains the CSS styles for the online games website, including animations, responsive design, and light mode support. */
 body {
     font-family: 'Poppins', sans-serif;
     background: radial-gradient(ellipse at 60% 10%, #111 0%, #000 100%);
@@ -25,7 +18,7 @@ body, main, header, .game-item, .dropdown-nav, .nav-menu, .play-btn, .theme-togg
 #animated-dots-bg {
     z-index: 0;
     pointer-events: none;
-    filter: blur(12px) brightness(1.1) saturate(1.08);
+    filter: blur(10px) brightness(2) saturate(1.08);
     mix-blend-mode: lighten;
 }
 
@@ -546,7 +539,7 @@ body.light-mode .game-dropdown > summary,
 body.light-mode .game-dropdown[open] > summary {
     background: #b8c1ec !important;
     color: #232946 !important;
-    box-shadow: 0 2px 12px #b8c1ec44 !importan;
+    box-shadow: 0 2px 12px #b8c1ec44 !important;
 }
 
 /* --- ADJUSTED HOVER EFFECT for Light Mode --- */
@@ -559,7 +552,7 @@ body.light-mode .theme-toggle-btn:hover {
 
 /* --- Light mode for dropdown nav menu --- */
 body.light-mode .nav-menu {
-    background: linear-gradient(90deg, #eaf0ffcc 60%, #b8c1ecc 100%) !important;
+    background: linear-gradient(90deg, #eaf0ffcc 60%, #b8c1ec 100%) !important;
     box-shadow: 12px 0 48px #b8c1ec22 !important;
 }
 body.light-mode .nav-menu a {
